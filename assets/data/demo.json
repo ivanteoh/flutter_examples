@@ -1,0 +1,42 @@
+[
+    {
+        "id": 0,
+        "name": "Counter",
+        "route": "/counter"
+    },
+    {
+        "id": 1,
+        "name": "Sunflower",
+        "route": "/sunflower"
+    },
+    {
+        "id": 2,
+        "name": "Startup Namer",
+        "route": "/startup_namer"
+    },
+    {
+        "id": 3,
+        "name": "Layout Basic",
+        "route": "/layout_basic"
+    },
+    {
+        "id": 4,
+        "name": "Baby Names",
+        "route": "/baby_names"
+    },
+    {
+        "id": 5,
+        "name": "Friendly Chat",
+        "route": "/friendlychat"
+    },
+    {
+        "id": 6,
+        "name": "Shrine",
+        "route": "/shrine"
+    },
+    {
+        "id": 7,
+        "name": "Chat App",
+        "route": "/chat_app"
+    }
+]
