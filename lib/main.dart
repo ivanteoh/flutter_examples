@@ -1,24 +1,33 @@
+// Uncomment the following lines when enabling Firebase Crashlytics
+// import 'dart:io';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
+
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as root_bundle;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:logging/logging.dart';
 
 import 'firebase_options.dart';
-import './packages/counter/main.dart' as counter;
-import './packages/sunflower/main.dart' as sunflower;
-import './packages/startup_namer/main.dart' as startup_namer;
-import './packages/layout_basic/main.dart' as layout_basic;
-import './packages/baby_names/main.dart' as baby_names;
-import './packages/friendlychat/main.dart' as friendlychat;
-import './packages/shrine/app.dart' as shrine;
-import './packages/chat_app/main.dart' as chat_app;
-import './packages/chat_app/services/auth_service.dart';
+import 'packages/baby_names/main.dart' as baby_names;
+import 'packages/chat_app/main.dart' as chat_app;
+import 'packages/chat_app/services/auth_service.dart';
+import 'packages/counter/main.dart' as counter;
+import 'packages/friendlychat/main.dart' as friendlychat;
+import 'packages/game/crashlytics/crashlytics.dart';
+import 'packages/game/main.dart' as game;
+import 'packages/layout_basic/main.dart' as layout_basic;
+import 'packages/shrine/app.dart' as shrine;
+import 'packages/startup_namer/main.dart' as startup_namer;
+import 'packages/sunflower/main.dart' as sunflower;
 
 Future<List<Demo>> fetchDemo() async {
-  final jsonData =
-      await root_bundle.rootBundle.loadString('assets/data/demo.json');
+  final jsonData = await rootBundle.loadString('assets/data/demo.json');
   final list = json.decode(jsonData) as List<dynamic>;
   return list.map((e) => Demo.fromJson(e)).toList();
 }
@@ -155,13 +164,29 @@ class MyApp extends StatelessWidget {
         '/friendlychat': (context) => const friendlychat.FriendlychatApp(),
         '/shrine': (context) => const shrine.ShrineApp(),
         '/chat_app': (context) => chat_app.widgetProvider(),
+        '/game': (context) => game.gameMain(),
       },
     );
   }
 }
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // To enable Firebase Crashlytics, uncomment the following lines and
+  // the import statements at the top of this file.
+  // See the 'Crashlytics' section of the main README.md file for details.
+
+  FirebaseCrashlytics? crashlytics;
+  // if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+  //   try {
+  //     WidgetsFlutterBinding.ensureInitialized();
+  //     await Firebase.initializeApp(
+  //       options: DefaultFirebaseOptions.currentPlatform,
+  //     );
+  //     crashlytics = FirebaseCrashlytics.instance;
+  //   } catch (e) {
+  //     debugPrint("Firebase couldn't be initialized: $e");
+  //   }
+  // }
 
   // for baby_names
   await Firebase.initializeApp(
@@ -170,6 +195,26 @@ Future<void> main() async {
 
   // for chat_app
   await AuthService.init();
+
+  await guardWithCrashlytics(
+    guardedMain,
+    crashlytics: crashlytics,
+  );
+}
+
+/// Without logging and crash reporting, this would be `void main()`.
+void guardedMain() {
+  if (kReleaseMode) {
+    // Don't log anything below warnings in production.
+    Logger.root.level = Level.WARNING;
+  }
+  Logger.root.onRecord.listen((record) {
+    debugPrint('${record.level.name}: ${record.time}: '
+        '${record.loggerName}: '
+        '${record.message}');
+  });
+
+  WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
 }

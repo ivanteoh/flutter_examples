@@ -39,7 +39,7 @@ dependencies:
   english_words: ^4.0.0
 
   # baby_names
-  firebase_core: ^1.23.0
+  firebase_core: ^1.23.0  # baby_names and game options - Needed for Crashlytics below 
   cloud_firestore: ^3.4.9
 
   # shrine
@@ -58,20 +58,42 @@ dependencies:
       url: https://github.com/nrubin29/social_media_buttons
       ref: null-safety
 
+  # game core
+  audioplayers: ^1.0.1
+  # cupertino_icons: ^1.0.2  # Duplicate
+  go_router: ^4.4.1
+  logging: ^1.0.2
+  # provider: ^6.0.2  # Duplicate
+  # shared_preferences: ^2.0.13  # Duplicate
+
+  # game options
+  # If you don't need one of the following dependencies,
+  # delete the relevant line below, and get rid of any Dart code
+  # that references the dependency.
+  # firebase_core: ^1.15.0  # Needed for Crashlytics below
+  firebase_crashlytics: ^2.8.1  # Error reporting
+  games_services: ^3.0.0  # Achievements and leaderboards
+  google_mobile_ads: ^2.0.1  # Ads
+  in_app_purchase: ^3.0.1  # In-app purchases
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # chat_app
-  build_runner: ^2.0.0
-  json_serializable: ^6.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
+
+  # chat_app
+  build_runner: ^2.0.0
+  json_serializable: ^6.0.0
+
+  # game
+  flutter_launcher_icons: ^0.10.0
+  test: ^1.19.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -93,6 +115,9 @@ flutter:
     - assets/layout_basic/
     - assets/shrine/
     - assets/chat_app/
+    - assets/game/images/
+    - assets/game/music/
+    - assets/game/sfx/
 
     # shrine
     # understand assets in a package
@@ -162,11 +187,23 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
-  # shrine
-  # TODO: Insert Fonts (103)
   fonts:
+    # shrine
+    # TODO: Insert Fonts (103)
     - family: Rubik
       fonts:
-        - asset: fonts/Rubik-Regular.ttf
-        - asset: fonts/Rubik-Medium.ttf
+        - asset: assets/shrine/fonts/Rubik-Regular.ttf
+        - asset: assets/shrine/fonts/Rubik-Medium.ttf
           weight: 500
+
+    # game
+    - family: Permanent Marker
+      fonts:
+        - asset: assets/game/Permanent_Marker/PermanentMarker-Regular.ttf
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/game/icon.png"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/game/icon-adaptive-foreground.png"

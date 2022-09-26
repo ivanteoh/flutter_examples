@@ -38,5 +38,10 @@
         "id": 7,
         "name": "Chat App",
         "route": "/chat_app"
+    },
+    {
+        "id": 8,
+        "name": "Game",
+        "route": "/game"
     }
 ]

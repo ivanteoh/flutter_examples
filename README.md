@@ -10,6 +10,7 @@ This is the list of Flutter examples that I learned.
 * Friendly Chat: https://github.com/flutter/friendlychat-steps
 * Shrine: https://codelabs.developers.google.com/codelabs/mdc-101-flutter
 * Chat App: https://github.com/LinkedInLearning/learning-flutter-3009709
+* Game: https://github.com/flutter/samples/tree/main/game_template and https://www.youtube.com/watch?v=zGgeBNiRy-8
 
 ## Getting Started
 

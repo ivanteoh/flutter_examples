@@ -1,7 +1,6 @@
 // https://firebase.flutter.dev/docs/migration/
-import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
 
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() {
@@ -74,10 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
           as DocumentSnapshot<Map<String, dynamic>>;
       final fresh = Record.fromSnapshot(freshSnapshot);
 
-      transaction.update(record.reference, {'votes': fresh.votes + 1});
+      transaction
+          .update(record.reference, <String, int>{'votes': fresh.votes + 1});
     }).then(
       (value) => debugPrint("DocumentSnapshot successfully updated!"),
-      onError: (e) => debugPrint("Error updating document $e"),
+      onError: (dynamic e) => debugPrint("Error updating document $e"),
     );
   }
 
